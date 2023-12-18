@@ -1,0 +1,90 @@
+/* style.css */
+
+/* Reset default margin and padding and set background and text color for the entire body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2e; /* Changed background color */
+    color: #abb2bf; /* Changed text color */
+}
+
+/* Container styling with max-width, padding, background color, border-radius, and box shadow */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e3050; /* Changed background color */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Styling for the main heading */
+h1 {
+    color: #61afef; /* Changed heading color */
+}
+
+/* Styling for the input section using CSS Grid */
+.input-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Styling for labels */
+label {
+    color: #c792ea; /* Changed label color */
+}
+
+/* Styling for input, select, and button elements */
+input,
+select,
+button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3e4167; /* Changed input field color */
+    color: #abb2bf;
+}
+
+/* Styling for buttons with cursor and margin */
+button {
+    cursor: pointer;
+    margin-left: 0;
+}
+
+/* Margin for results section */
+.results {
+    margin-top: 20px;
+}
+
+/* Styling for tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Styling for table headers and cells */
+th, td {
+    padding: 8px;
+    border: 1px solid #4c5263; /* Changed table frame color */
+}
+
+/* Styling for table headers with background and text color */
+th {
+    background-color: #2e3050;
+    color: #61afef;
+}
+
+/* Styling for stop-info with color, font weight, and margin */
+.stop-info {
+    color: #c792ea;
+    font-weight: bold;
+    margin-top: 10px;
+}
