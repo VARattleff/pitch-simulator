@@ -3,7 +3,7 @@ window.addEventListener('load', setupSimulation);
 
 // Nulstiller simuleringen til standardværdier og viser en succesmeddelelse
 function setupSimulation() {
-    console.log('%cPitch simulator lavet af August', 'color: #ff6600; font-size: 18px; font-weight: bold;');
+    console.log('%cPitch simulator', 'color: #ff6600; font-size: 18px; font-weight: bold;');
     document.querySelector('#onclick').addEventListener('click', runSimulation);
     document.querySelector('#resetSimulation').addEventListener('click', resetSimulation);
 }

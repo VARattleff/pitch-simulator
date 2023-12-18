@@ -12,7 +12,7 @@ Dette projekt indeholder en pitch-simulator, der simulerer bevægelsen af et kas
 
 ## Udvikler
 
-Dette pitch-simulator projekt er udviklet af August.
+Dette pitch-simulator projekt er udviklet af August Busck Porsbo og Viktor A. Rattleff.
 
 ## Licens
 
