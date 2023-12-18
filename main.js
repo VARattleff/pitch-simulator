@@ -1,58 +1,51 @@
-// Function to reset the simulation parameters and display a success message
+// Initialiserer simuleringen ved at tilføje eventlisteners til belastede elementer
+window.addEventListener('load', setupSimulation);
+
+// Nulstiller simuleringen til standardværdier og viser en succesmeddelelse
+function setupSimulation() {
+    console.log('%cPitch simulator lavet af August', 'color: #ff6600; font-size: 18px; font-weight: bold;');
+    document.querySelector('#onclick').addEventListener('click', runSimulation);
+    document.querySelector('#resetSimulation').addEventListener('click', resetSimulation);
+}
+
+// Nulstiller inputværdier til standardværdier
 function resetSimulation() {
-    // Resetting input values to default
+    resetInputValues();
+    clearResults();
+    showToast('Simulation nulstillet', 'success');
+}
+
+// Nulstiller inputværdier til standardværdier
+function resetInputValues() {
     document.getElementById('initialSpeed').value = '85';
     document.getElementById('initialAngle').value = '1';
     document.getElementById('rotationSpeed').value = '1800';
     document.getElementById('rotationAngle').value = '0';
     document.getElementById('stepSize').value = '1e-4';
-
-    // Clearing simulation results and displaying a success toast message
-    document.getElementById('results').innerHTML = '';
-    showToast('Simulation nulstillet', 'success');
 }
 
-// Function to display toast messages
-function showToast(message, type) {
-    // Retrieving the toast element
-    const toastElement = document.getElementById('toast');
+// Rydder resultaterne i resultatområdet
+function clearResults() {
+    document.getElementById('results').innerHTML = '';
+}
 
-    // Setting the message and class for styling
+// Viser en midlertidig meddelelse (toast) til brugeren
+function showToast(message, type) {
+    const toastElement = document.getElementById('toast');
     toastElement.textContent = message;
     toastElement.className = `toast ${type}`;
-
-    // Setting a timeout to clear the toast message after 3 seconds
     setTimeout(() => {
         toastElement.textContent = '';
     }, 3000);
 }
 
-// Function to run the simulation based on user input
+// Kører simuleringen baseret på inputværdier og viser resultaterne
 function runSimulation() {
-    // Retrieving simulation parameters from user input
     const simulationType = document.getElementById('simulationType').value;
-    const v0 = parseFloat(document.getElementById('initialSpeed').value);
-    const theta = parseFloat(document.getElementById('initialAngle').value);
-    const omega = parseFloat(document.getElementById('rotationSpeed').value);
-    const phi = parseFloat(document.getElementById('rotationAngle').value);
-    const h = parseFloat(document.getElementById('stepSize').value);
+    const { v0, theta, omega, phi, h } = getInputValues();
 
-    // Running different simulations based on the selected type
     switch (simulationType) {
-        case 'magnus':
-            // Running Magnus simulation and displaying results
-            const resultWithMagnus = solveEquationsWithMagnus(v0, theta, omega, phi, h, 0.145);
-            displayResults(resultWithMagnus);
-            showToast('Magnus-simulation fuldført', 'success');
-            break;
-        case 'airDrag':
-            // Running Air Drag simulation and displaying results
-            const resultWithAirDrag = solveEquationsWithAirDrag(v0, theta, omega, phi, h);
-            displayResults(resultWithAirDrag);
-            showToast('Air Drag-simulation fuldført', 'success');
-            break;
         default:
-            // Running default simulation and displaying results
             const result = solveEquations(v0, theta, omega, phi, h);
             displayResults(result);
             showToast('Standard-simulation fuldført', 'success');
@@ -60,10 +53,109 @@ function runSimulation() {
     }
 }
 
-// Event listener to run the simulation when the window is loaded
-window.addEventListener('load', main);
+// Henter inputværdier fra brugerens inputfelter
+function getInputValues() {
+    return {
+        v0: parseFloat(document.getElementById('initialSpeed').value),
+        theta: parseFloat(document.getElementById('initialAngle').value),
+        omega: parseFloat(document.getElementById('rotationSpeed').value),
+        phi: parseFloat(document.getElementById('rotationAngle').value),
+        h: parseFloat(document.getElementById('stepSize').value),
+    };
+}
 
-// Main function to set up the event listener for the simulation button
-function main() {
-    document.querySelector('button').addEventListener('click', runSimulation);
+// Løser differentialligningerne for simuleringen og returnerer resultaterne
+function solveEquations(v0, theta, omega, phi, h) {
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    let vx = v0 * Math.cos(theta);
+    let vy = 0;
+    let vz = v0 * Math.sin(theta);
+    let v = Math.sqrt(vx ** 2 + vy ** 2 + vz ** 2);
+
+    const g = 9.82;
+    const B = 0.00041;
+    const l = 18.44;
+    const T = l / v0;
+    const rho = 1.293;
+    const A = 0.00426;
+
+    function updateState() {
+        const C = 0.29 + 0.22 / (1 + Math.E ** ((v - 32.37) / 5.2));
+        const D = 0.5 * rho * A * C;
+        const ax = - D * v * vx + B * omega * (vz * Math.sin(phi) - vy * Math.cos(phi));
+        const ay = - D * v * vy + B * omega * vx * Math.cos(phi);
+        const az = - g - D * v * vz - B * omega * vx * Math.sin(phi);
+
+        vx += ax * h;
+        vy += ay * h;
+        vz += az * h;
+        x += vx * h;
+        y += vy * h;
+        z += vz * h;
+
+        if (x >= l) {
+            stopSimulation();
+        }
+    }
+
+    function stopSimulation() {
+        const stopTime = results[results.length - 1].t;
+        console.log(stopTime);
+        const stopVelocity = Math.sqrt(vx ** 2 + vy ** 2 + vz ** 2);
+        const stopInfo = `Simuleringen er stoppet ved t = ${stopTime}s med en hastighed på ${stopVelocity.toFixed(2)} m/s`;
+
+        const stopInfoDiv = document.getElementById('stopInfo');
+        stopInfoDiv.textContent = stopInfo;
+        stopInfoDiv.className = 'stop-info';
+
+        console.log(stopInfo);
+    }
+
+    const results = [];
+
+    for (let t = 0; t <= T; t += h) {
+        updateState();
+        results.push({ t, x, y, z });
+    }
+
+    stopSimulation();
+
+    return results;
+}
+
+// Viser resultaterne i HTML-dokumentet
+function displayResults(results) {
+    const resultsDiv = document.querySelector('#results');
+    resultsDiv.innerHTML = '';
+
+    if (results.length === 0) {
+        resultsDiv.textContent = 'Ingen resultater at vise.';
+        return;
+    }
+
+    const table = createResultsTable(results);
+    resultsDiv.appendChild(table);
+}
+
+// Opretter en HTML-tabel baseret på resultatdata
+function createResultsTable(results) {
+    const table = document.createElement('table');
+    const headerRow = table.insertRow(0);
+
+    for (const key in results[0]) {
+        const th = document.createElement('th');
+        th.textContent = key.toUpperCase();
+        headerRow.appendChild(th);
+    }
+
+    for (const result of results) {
+        const row = table.insertRow();
+        for (const key in result) {
+            const cell = row.insertCell();
+            cell.textContent = result[key];
+        }
+    }
+    return table;
 }

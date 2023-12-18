@@ -1,12 +1,10 @@
-/* style.css */
-
 /* Reset default margin and padding and set background and text color for the entire body */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1e1e2e; /* Changed background color */
-    color: #abb2bf; /* Changed text color */
+    background-color: #1e1e2e; 
+    color: #abb2bf; 
 }
 
 /* Container styling with max-width, padding, background color, border-radius, and box shadow */
@@ -14,7 +12,7 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #2e3050; /* Changed background color */
+    background-color: #2e3050; 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -22,7 +20,7 @@ body {
 
 /* Styling for the main heading */
 h1 {
-    color: #61afef; /* Changed heading color */
+    color: #61afef; 
 }
 
 /* Styling for the input section using CSS Grid */
@@ -37,7 +35,7 @@ h1 {
 
 /* Styling for labels */
 label {
-    color: #c792ea; /* Changed label color */
+    color: #c792ea; 
 }
 
 /* Styling for input, select, and button elements */
@@ -49,7 +47,7 @@ button {
     margin-bottom: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #3e4167; /* Changed input field color */
+    background-color: #3e4167;
     color: #abb2bf;
 }
 
@@ -73,7 +71,7 @@ table {
 /* Styling for table headers and cells */
 th, td {
     padding: 8px;
-    border: 1px solid #4c5263; /* Changed table frame color */
+    border: 1px solid #4c5263; 
 }
 
 /* Styling for table headers with background and text color */

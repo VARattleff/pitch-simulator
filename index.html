@@ -1,69 +1,50 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <!-- Meta tags for character set and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Linking to external stylesheet and setting favicon -->
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="#" type="image/x-icon">
-
-    <!-- Setting the title of the webpage -->
-    <title>Fysiksimuleringer</title>
+    <title>Pitch-simulator</title>
 </head>
-<body>
-<!-- Main container for the webpage content -->
-<div class="container">
-    <!-- Main heading of the webpage -->
-    <h1>Fysik Simuleringer</h1>
+    <body>
+        <div class="container">
+             <h1>Pitch simulator</h1>
+            <div class="input-section">
+                <label for="simulationType"> Simuleringstype:</label>
 
-    <!-- Section for user input related to simulations -->
-    <div class="input-section">
-        <!-- Dropdown to select simulation type -->
-        <label for="simulationType"> Simuleringstype:</label>
-        <select id="simulationType">
-            <option value="default">Standard Differentialligningerne</option>
-        </select>
+                <select id="simulationType">
+                    <option value="default">Standard Differentialligningerne</option>
+                </select>
 
-        <!-- Input fields for simulation parameters -->
-        <label for="initialSpeed">Starthastighed (m/s):</label>
-        <input type="number" id="initialSpeed" value="85">
+                <!-- Input fields for simulation parameters -->
+                <label for="initialSpeed">Starthastighed (m/s):</label>
+                <input type="number" id="initialSpeed" value="85">
 
-        <label for="initialAngle">Startvinkel (radianer):</label>
-        <input type="number" id="initialAngle" value="1">
+                <label for="initialAngle">Startvinkel (radianer):</label>
+                <input type="number" id="initialAngle" value="1">
 
-        <label for="rotationSpeed">Rotationshastighed (radianer/s):</label>
-        <input type="number" id="rotationSpeed" value="1800">
+                <label for="rotationSpeed">Rotationshastighed (radianer/s):</label>
+                <input type="number" id="rotationSpeed" value="1800">
 
-        <!-- Input field for rotation angle -->
-        <label for="rotationAngle">Rotationsvinkel (radianer):</label>
-        <input type="number" id="rotationAngle" value="0">
+                <label for="rotationAngle">Rotationsvinkel (radianer):</label>
+                <input type="number" id="rotationAngle" value="0">
 
-        <!-- Input field for step size in the simulation -->
-        <label for="stepSize">Trin-størrelse (sekunder):</label>
-        <input type="number" id="stepSize" value="1e-4">
+                <label for="stepSize">Trin-størrelse (sekunder):</label>
+                <input type="number" id="stepSize" value="1e-4">
 
-        <!-- Buttons to run and reset the simulation -->
-        <button onclick="runSimulation()">Kør Simulering</button>
-        <button onclick="resetSimulation()">Nulstil</button>
+                <button id="onclick">Kør Simulering</button>
+                <button id="resetSimulation">Nulstil</button>
 
-        <!-- Container to display information when the simulation is stopped -->
-        <div id="stopInfo" class="stop-info"></div>
-    </div>
+                <div id="stopInfo" class="stop-info"></div>
+            </div>
 
-    <!-- Container to display simulation results -->
-    <div id="results" class="results"></div>
+            <div id="results" class="results"></div>
+            <div id="toast" class="toast"></div>
 
-    <!-- Container for displaying toast messages -->
-    <div id="toast" class="toast"></div>
-</div>
+        </div>
 
-<!-- Script tags to include JavaScript files for different simulations -->
-<script src="default.js"></script>
-
-<!-- Main JavaScript file for controlling the simulation -->
-<script src="main.js"></script>
-</body>
+    <script src="main.js"></script>
+    </body>
 </html>
 
